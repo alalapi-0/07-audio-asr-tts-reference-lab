@@ -1,0 +1,8 @@
+{
+  "name": "audiobook-cleaner-lab",
+  "private": true,
+  "description": "中文有声书清洗与 TTS 数据集项目（治理与工具层）",
+  "scripts": {
+    "check:mcp": "node scripts/check_mcp_config.js"
+  }
+}

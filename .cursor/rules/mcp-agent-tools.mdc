@@ -1,5 +1,5 @@
 ---
-description: MCP 与浏览器工具使用规则（Playwright、filesystem、GitHub）
+description: MCP 与浏览器工具使用规则（chrome-devtools、playwright、context7、filesystem、GitHub）
 alwaysApply: true
 ---
 
@@ -7,7 +7,7 @@ alwaysApply: true
 
 ## 浏览器与 UI
 
-- 修改或验收 **UI / 前端 / Review 界面** 时，必须使用 **Playwright MCP** 或等效浏览器 MCP（如 Cursor 内置 `cursor-ide-browser`），不能仅凭代码推断页面成功。
+- 修改或验收 **UI / 前端 / Review 界面** 时，必须使用 **chrome-devtools** 或 **Playwright MCP**（或等效浏览器 MCP，如 Cursor 内置 `cursor-ide-browser`），不能仅凭代码推断页面成功。
 - 浏览器检查须覆盖：**页面可见内容**、**console 错误**、**network 关键请求**（若工具支持）、**核心用户流程**（导航、加载、关键按钮）。
 - Playwright 截图、trace、报告默认写入 `artifacts/` 或本地临时目录，**不得提交**到 Git。
 

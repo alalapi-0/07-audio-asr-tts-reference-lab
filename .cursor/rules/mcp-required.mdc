@@ -1,0 +1,43 @@
+---
+description: 工作区必需的 5 个 MCP Server 与 Agent 使用规则
+alwaysApply: true
+---
+
+# Workspace MCP（必需）
+
+当前仓库默认需要以下 **Workspace MCP Servers**（见 `.cursor/mcp.json`）：
+
+- `chrome-devtools`
+- `context7`
+- `filesystem`
+- `github`
+- `playwright`
+
+## 启动前检查
+
+- Agent 开始**自动推进**前必须确认上述 MCP 已在 Cursor Settings → MCP 中加载。
+- 修改 `.cursor/mcp.json` 后通常需 **Reload Window** 或重启 Cursor。
+- 可运行 `npm run check:mcp` 或 `node scripts/check_mcp_config.js` 做配置校验（不打印敏感值）。
+
+## 任务分工
+
+- **UI / 浏览器任务：** 必须使用 `chrome-devtools` 或 `playwright` 做真实页面检查（可见内容、console、关键流程），不能仅凭代码推断。
+- **文档与依赖不确定：** 优先用 `context7` 查询第三方库文档；同时阅读本仓库 `docs/`。
+- **文件读写：** 仅通过 `filesystem`（授权 `${workspaceFolder}`）或内置 Read/Write/Grep；不得授权 `/`、`~`、`C:\`、整盘 `/Volumes` 等大范围路径。
+- **GitHub 操作：** commit / push 前必须 `git status` 与 `git diff`；不得将 token、API Key、cookie 写入仓库。
+
+## 提交与安全
+
+- 提交前确认 diff 中无 token、API Key、cookie、`.env`、真实有声书音频/原文。
+- **禁止** 在 `.cursor/mcp.json` 或规则中写入真实 GitHub Token；使用 `${env:GITHUB_TOKEN}` 等环境变量映射。
+
+## MCP 不可用
+
+- 在 `PROJECT_STATE.md` 或轮次报告中**记录原因**，使用 `docs/agent_skills/mcp_usage_skill.md` 中的降级方案继续推进。
+- **不要** 无意义反复安装或覆盖用户全局 `~/.cursor/mcp.json`。
+
+## 参考
+
+- `AGENTS.md` — MCP Tools
+- `.cursor/rules/mcp-agent-tools.mdc`
+- `docs/agent_skills/mcp_usage_skill.md`

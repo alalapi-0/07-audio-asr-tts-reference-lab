@@ -11,6 +11,14 @@ from pathlib import Path
 REPO_ROOT = Path(__file__).resolve().parent.parent
 MCP_PATH = REPO_ROOT / ".cursor" / "mcp.json"
 
+REQUIRED_SERVERS = (
+    "chrome-devtools",
+    "context7",
+    "filesystem",
+    "github",
+    "playwright",
+)
+
 DANGEROUS_PATH_PATTERNS = (
     re.compile(r"^/$"),
     re.compile(r"^\\?$"),
@@ -19,6 +27,8 @@ DANGEROUS_PATH_PATTERNS = (
     re.compile(r"^/Users/[^/]+$"),
     re.compile(r"^/home/[^/]+$"),
     re.compile(r"^C:\\Users\\[^\\]+$", re.IGNORECASE),
+    re.compile(r"^/Volumes/?$"),
+    re.compile(r"^/Volumes/[^/]+$"),
 )
 
 SECRET_VALUE_PATTERNS = (
@@ -84,8 +94,9 @@ def main() -> int:
     names = sorted(servers.keys())
     summary.append(f"servers ({len(names)}): {', '.join(names) if names else '(none)'}")
 
-    if "playwright" not in servers:
-        warnings.append("playwright server not configured (recommended for UI rounds)")
+    for required in REQUIRED_SERVERS:
+        if required not in servers:
+            errors.append(f"missing required server: {required}")
 
     for name, cfg in servers.items():
         if not isinstance(cfg, dict):
