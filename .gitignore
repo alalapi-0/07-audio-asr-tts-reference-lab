@@ -1,0 +1,77 @@
+# Secrets and local configuration
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+*.p12
+*.pfx
+*token*
+*secret*
+
+# Real input data and generated artifacts
+data/
+cache/
+datasets/
+exports/
+artifacts/
+outputs/
+tmp/
+temp/
+
+# Audio and media files
+*.wav
+*.mp3
+*.flac
+*.m4a
+*.aac
+*.ogg
+*.opus
+*.wma
+*.aiff
+*.aif
+*.mp4
+*.mkv
+*.mov
+
+# Model and ML caches
+models/
+checkpoints/
+*.ckpt
+*.pt
+*.pth
+*.safetensors
+.cache/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+build/
+dist/
+*.egg-info/
+
+# Node / frontend
+node_modules/
+.next/
+dist/
+coverage/
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+
+# Local reference subproject clones (embedded git repos; clone separately via reference_lab)
+easyaligner/
+tts-dataset-pipeline/
+whisper/
+whisper-timestamped/
+whisperX/
+
+# MCP / agent local artifacts
+artifacts/

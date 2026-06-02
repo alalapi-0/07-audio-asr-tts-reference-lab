@@ -1,0 +1,146 @@
+version: 1
+project_name: audiobook-cleaner-lab
+project_goal: >
+  Convert Chinese audiobook recordings into clean audio, accurate text,
+  reviewable cut plans, and high-quality audio+text datasets for TTS and
+  personal voice cloning.
+
+reading_order:
+  - README.md
+  - AGENTS.md
+  - PROJECT_STATE.md
+  - docs/governance/current_repo_audit.md
+  - docs/reference_absorption/07_audio_asr_tts_reference_synthesis.md
+  - docs/reference_absorption/migration_matrix.md
+  - docs/ROADMAP_40_ROUNDS.md
+  - docs/governance/repo_protocol_standard.yaml
+
+core_principles:
+  - ASR is a tool, not the final product.
+  - The final output is a reviewed TTS dataset with clean wav+text pairs and training manifests.
+  - Keep raw audio and source text protected outside version control.
+  - Preserve the existing reference subprojects; do not rewrite them into this project's implementation.
+  - Prefer staged, reviewable Round work over large refactors.
+  - Every Round should update PROJECT_STATE.md and docs/governance/update_log.md.
+
+reference_absorption_rules:
+  allowed:
+    - Borrow architecture ideas, stage boundaries, schemas, quality gates, cache patterns, and adapter abstractions.
+    - Cite reference repositories as design inspiration.
+    - Reimplement small project-specific logic from first principles when needed in future Rounds.
+  forbidden:
+    - Do not copy source code with unclear or incompatible licenses.
+    - Do not copy tts-dataset-pipeline code because non-commercial license constraints may apply.
+    - Do not claim index-tts or amphion source code has been read in this workspace.
+    - Do not make pyannote diarization mandatory for MVP.
+    - Do not romanize final Chinese TTS text.
+    - Do not convert the project into a whisperX wrapper or a tts-dataset-pipeline clone.
+
+license_rules:
+  - Treat all reference code as external material unless explicitly reimplemented for this project.
+  - Document any future dependency license before adding it.
+  - Separate method descriptions from copied implementation.
+  - Models may have different licenses from code; record both before use.
+
+data_protection:
+  never_commit:
+    - data/
+    - cache/
+    - datasets/
+    - exports/
+    - "*.wav"
+    - "*.mp3"
+    - "*.flac"
+    - "*.m4a"
+    - "*.aac"
+    - "*.ogg"
+    - "*.opus"
+    - ".env"
+    - "*.key"
+    - "*.pem"
+  handling_rules:
+    - Do not read user private audio or source text unless explicitly asked.
+    - Do not process real audio in governance Rounds.
+    - Record only paths for suspected sensitive local data.
+    - Keep raw source files read-only; generated work copies must be reproducible.
+
+pipeline_stage_rules:
+  mvp_default:
+    - manifest registration
+    - local data safety
+    - audio precheck
+    - ASR adapter abstraction
+    - mock ASR
+    - whisper-timestamped planning or optional backend
+    - transcript cache
+    - source text normalization
+    - ASR-only splitting
+    - quality gate
+    - non-destructive cut plan
+    - wav+txt export
+  phase_2:
+    - fuzzy matching
+    - forced alignment fallback
+    - whisperX backend
+    - partial redo
+    - review UI
+    - feedback loop
+    - advanced prob_diff quality checks
+  not_mvp:
+    - diarization by default
+    - full TTS training
+    - cloud deployment
+    - large model downloads
+
+round_rules:
+  roadmap_file: docs/ROADMAP_40_ROUNDS.md
+  numbering: Round 00 through Round 39
+  required_fields:
+    - name
+    - goal
+    - prerequisites
+    - tasks
+    - outputs
+    - acceptance
+    - not_doing
+    - risks
+    - next_dependency
+  per_round_closeout:
+    - Update PROJECT_STATE.md.
+    - Update docs/governance/update_log.md.
+    - Run or update scripts/check_repo.py when governance surface changes.
+    - Do not mark future Rounds complete without actual implementation evidence.
+
+structure_rules:
+  root_docs:
+    governance: docs/governance/
+    architecture: docs/architecture/
+    reference_absorption: docs/reference_absorption/
+    roadmap: docs/ROADMAP_40_ROUNDS.md
+  future_packages:
+    - packages/asr_core/
+    - packages/text_core/
+    - packages/alignment_core/
+    - packages/audio_core/
+    - packages/quality_core/
+    - packages/export_core/
+    - packages/review_core/
+    - packages/cache_core/
+  preservation:
+    - Do not modify reference subproject source code during governance-only Rounds.
+    - Do not delete completed Round records.
+    - If a rename or deletion is necessary in a future Round, record path, operation, reason, replacement, and downstream impact in update_log.md.
+
+check_rules:
+  script: scripts/check_repo.py
+  must_check:
+    - README.md
+    - AGENTS.md
+    - PROJECT_STATE.md
+    - docs/ROADMAP_40_ROUNDS.md
+    - docs/reference_absorption/
+    - docs/architecture/
+    - docs/governance/current_repo_audit.md
+    - docs/governance/update_log.md
+    - docs/governance/repo_protocol_standard.yaml
+    - root .gitignore audio and data protections

@@ -1,0 +1,74 @@
+version: 1
+purpose: "Describe the role of root-level governance, architecture, roadmap, and check files."
+
+root_files:
+  README.md:
+    role: "Project entry point and positioning document."
+    update_when: "Project goal, MVP path, reference absorption summary, or user-facing usage changes."
+  AGENTS.md:
+    role: "Operating protocol for future coding agents."
+    update_when: "Agent reading order, forbidden actions, Round workflow, or safety protocol changes."
+  PROJECT_STATE.md:
+    role: "Current project state, risks, TODOs, and next Round recommendation."
+    update_when: "Every completed Round."
+  .gitignore:
+    role: "Safety boundary for real data, generated datasets, caches, secrets, and large audio files."
+    update_when: "New generated directories, file types, or local-only artifacts are introduced."
+
+governance:
+  docs/governance/current_repo_audit.md:
+    role: "Round 00 baseline audit of the actual workspace."
+  docs/governance/repo_protocol_standard.yaml:
+    role: "Machine-readable project governance and safety protocol."
+  docs/governance/update_log.md:
+    role: "Human-readable log of governance and structural changes."
+  docs/governance/file_role_map.yaml:
+    role: "Map of file responsibilities to avoid duplicate documentation."
+
+reference_absorption:
+  docs/reference_absorption/07_audio_asr_tts_reference_synthesis.md:
+    role: "Project-specific synthesis of reference repository lessons."
+  docs/reference_absorption/migration_matrix.md:
+    role: "Mapping from reference capabilities to local modules and future Rounds."
+
+architecture:
+  docs/architecture/PIPELINE_ARCHITECTURE.md:
+    role: "End-to-end audiobook cleaning and TTS dataset pipeline."
+  docs/architecture/ASR_ADAPTER_ARCHITECTURE.md:
+    role: "ASR backend abstraction, transcript schema, and backend capability differences."
+  docs/architecture/TEXT_NORMALIZATION_ARCHITECTURE.md:
+    role: "Chinese dual-track text normalization and span map strategy."
+  docs/architecture/ALIGNMENT_AND_SPLITTING_ARCHITECTURE.md:
+    role: "Alignment, segment proposal, and review escalation strategy."
+  docs/architecture/QUALITY_GATE_ARCHITECTURE.md:
+    role: "Quality metrics, gates, and segment state machine."
+  docs/architecture/TTS_DATASET_EXPORT_ARCHITECTURE.md:
+    role: "wav+txt, metadata, JSONL, LJSpeech-like, IndexTTS, and Amphion export profiles."
+  docs/architecture/HUMAN_REVIEW_ARCHITECTURE.md:
+    role: "Manual review interface concepts, review records, and feedback records."
+  docs/architecture/CACHE_AND_PARTIAL_REDO_ARCHITECTURE.md:
+    role: "Cache layout, stage markers, skip-if-exists, and partial redo design."
+
+roadmap:
+  docs/ROADMAP_40_ROUNDS.md:
+    role: "Round 00-39 execution plan and long-term project backbone."
+    update_when: "Round scope changes, dependency changes, or completed evidence is added."
+
+agent_tooling:
+  .cursor/mcp.json:
+    role: "Project-level MCP server declarations for Playwright, filesystem, and GitHub."
+    update_when: "MCP tooling changes; merge new servers without removing existing ones."
+  .cursor/rules/mcp-agent-tools.mdc:
+    role: "Cursor rule for MCP usage, browser verification, and secret safety."
+    update_when: "MCP workflow or safety boundaries change."
+  docs/agent_skills/mcp_usage_skill.md:
+    role: "Human-readable MCP usage guide, fallbacks, and optional tooling."
+    update_when: "Enabled MCP servers, token requirements, or fallback matrix changes."
+
+scripts:
+  scripts/check_repo.py:
+    role: "Lightweight structure and safety check using Python standard library only."
+    update_when: "Required docs, directories, ignore rules, or roadmap checks change."
+  scripts/check_mcp_config.py:
+    role: "Validate .cursor/mcp.json structure, playwright presence, and filesystem scope."
+    update_when: "MCP config schema or safety checks change."
